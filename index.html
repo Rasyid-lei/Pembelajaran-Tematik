@@ -180,6 +180,48 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 .ex-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
 .ex-tag{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--surf3);color:var(--text2);border:1px solid var(--border)}
 .ex-tag.ok{color:var(--green)}.ex-tag.warn{color:var(--gold)}.ex-tag.fix{color:var(--red)}
+
+.coin-chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--gold);background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.35);border-radius:99px;padding:3px 10px}
+.coin-float{position:fixed;left:50%;top:38%;transform:translateX(-50%);z-index:9998;font-size:26px;font-weight:900;color:var(--gold);text-shadow:0 2px 14px rgba(0,0,0,.6);pointer-events:none;animation:coinUp 1.4s ease-out forwards}
+@keyframes coinUp{0%{opacity:0;transform:translate(-50%,20px) scale(.7)}20%{opacity:1;transform:translate(-50%,0) scale(1.15)}100%{opacity:0;transform:translate(-50%,-90px) scale(1)}}
+.shop{display:none;background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin:14px 0}
+.shop-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;margin-bottom:4px}
+.shop-note{font-size:11px;color:var(--text2);margin-bottom:10px}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.shop-item,.shop-tg{background:var(--surf3);border:1px solid var(--border);border-radius:var(--rsm);color:var(--text);padding:10px;text-align:left;cursor:pointer;font:inherit;font-size:13px}
+.shop-item:hover:not(:disabled),.shop-tg:hover:not(:disabled){border-color:var(--gold)}
+.shop-item:disabled,.shop-tg:disabled{opacity:.45;cursor:not-allowed}
+.shop-item b{display:block}.shop-item small{color:var(--text2);font-size:11px}.shop-item .pr{color:var(--gold);font-weight:800;font-size:12px}
+.shop-tgs{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.shop-tg{display:flex;align-items:center;gap:10px}
+.shop-tg .av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;flex-shrink:0}
+#freeze-ov{display:none;position:fixed;inset:0;z-index:9990;background:rgba(150,215,255,.28);backdrop-filter:blur(5px) saturate(1.3);flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#e8f7ff;text-align:center;touch-action:none}
+#freeze-ov .fz-i{font-size:72px}#freeze-ov .fz-t{font-size:20px;font-weight:800}#freeze-ov .fz-n{font-size:44px;font-weight:900}
+
+#q-text,#q-opts{transition:filter 1.2s ease,transform .7s ease}
+.fx-fog{filter:blur(9px)}.fx-flip{transform:rotate(180deg)}
+#cut{display:none;position:fixed;inset:0;z-index:9995;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff;cursor:pointer;text-align:center;padding:20px;background:radial-gradient(circle at 50% 45%,var(--cc,rgba(124,92,252,.45)) 0%,rgba(4,6,14,.95) 65%);animation:cutIn .3s ease-out}
+@keyframes cutIn{from{opacity:0}to{opacity:1}}
+.cut-ti{font-size:13px;font-weight:900;letter-spacing:.35em;color:#fff;animation:cutBlink .5s 3}
+@keyframes cutBlink{50%{opacity:.25}}
+.cut-stage{position:relative;width:min(92vw,420px);height:130px}
+.cut-av{position:absolute;top:34px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff;border:3px solid #fff;box-shadow:0 0 26px rgba(255,255,255,.45)}
+.cut-av.a{left:0;animation:cutA .5s ease-out both}
+.cut-av.t{right:0;animation:cutT .5s ease-out both}
+.cut-stage:not(.blk) .cut-av.t{animation:cutT .5s ease-out both,cutHit .55s 1.5s}
+@keyframes cutA{from{transform:translateX(-90px);opacity:0}to{transform:none;opacity:1}}
+@keyframes cutT{from{transform:translateX(90px);opacity:0}to{transform:none;opacity:1}}
+@keyframes cutHit{20%{transform:translateX(-12px)}40%{transform:translateX(12px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.cut-proj{position:absolute;top:40px;left:64px;font-size:50px;filter:drop-shadow(0 0 14px #fff);animation:cutProj .9s .6s ease-in both}
+.cut-stage.blk .cut-proj{animation:cutBnc 1.5s .6s ease-in-out both}
+@keyframes cutProj{0%{left:64px;opacity:0;transform:scale(.5) rotate(0)}12%{opacity:1}90%{opacity:1}100%{left:calc(100% - 118px);opacity:0;transform:scale(1.5) rotate(540deg)}}
+@keyframes cutBnc{0%{left:64px;opacity:0;transform:scale(.5) rotate(0)}12%{opacity:1}50%{left:calc(100% - 118px);transform:scale(1.4) rotate(360deg)}100%{left:64px;opacity:0;transform:scale(.7) rotate(-200deg)}}
+.cut-boom,.cut-sh{position:absolute;right:-8px;top:10px;font-size:84px;animation:cutPop .5s 1.5s both}
+.cut-stage.blk .cut-sh{animation-delay:1.25s}
+@keyframes cutPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.5);opacity:1}100%{transform:scale(1.15);opacity:.95}}
+.cut-txt{font-size:19px;font-weight:800;line-height:1.35;max-width:420px;animation:fi .5s 1.6s both}
+.cut-sub{font-size:12px;color:rgba(255,255,255,.65);max-width:380px;animation:fi .5s 1.8s both}
+.cut-skip{font-size:11px;color:rgba(255,255,255,.4)}
 </style>
 </head>
 <body>
@@ -195,6 +237,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 
 <!-- TOAST -->
 <div id="toast-wrap"></div>
+<div id="cut"></div>
+<div id="freeze-ov"><div class="fz-i">❄️</div><div class="fz-t" id="fz-t">Kamu dibekukan!</div><div class="fz-n" id="fz-n">3</div></div>
 
 <!-- ══════════ HOME ══════════ -->
 <div id="sc-home" class="screen active">
@@ -262,6 +306,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
         <span class="mini-score-item cor">✅ <span class="score-val" id="sb-correct" style="font-size:11px;font-weight:700">0</span></span>
         <span class="mini-score-item wro">❌ <span class="score-val" id="sb-wrong" style="font-size:11px;font-weight:700">0</span></span>
       </span>
+      <span class="coin-chip" title="Saldo koin">🪙 <span id="coin-val">0</span></span>
       <button class="btn-leave" onclick="confirmLeave()">🚪 Keluar</button>
     </div>
     <div class="conn-row">
@@ -274,8 +319,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
   <div class="timer-card" id="timer-card">
     <div class="timer-top">
       <span class="timer-lbl">⏱ Waktu Tersisa</span>
-      <button class="vib-btn" id="vib-btn" onclick="toggleVibe()">📳 Getar: ON</button>
-      <button class="vib-btn" id="vib-test" onclick="testVibe()">Tes</button>
+      <button class="vib-btn" id="vib-test" onclick="wakeAll()" title="Getarkan semua HP peserta lain">🔔 Bangunkan</button>
       <span class="timer-num" id="timer-num">60</span>
     </div>
     <div class="timer-progress">
@@ -299,6 +343,7 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
     <div class="expl-head">💡 Pembahasan</div>
     <div id="q-expl-txt"></div>
   </div>
+  <div class="shop" id="shop"></div>
   <div class="ready-box" id="ready-box" style="display:none">
     <button class="btn btn-g btn-sm" id="btn-ready" onclick="setReady()">✅ Setuju, lanjut soal berikutnya</button>
     <div class="ready-cnt" id="ready-cnt"></div>
@@ -2249,7 +2294,9 @@ const S = {
   voting: false,       // guard flag to prevent concurrent castVote calls (race condition)
   rejoining: false,    // true selama pendaftaran ulang node pemain sedang berjalan
   myJoinedAt: null,    // joinedAt asli node pemain kita (disimpan lokal untuk dipakai saat daftar ulang)
-  renderKey: null, textKey: null, explFor: -1, lastHostId: null, lastVibSec: null, vibeOn: true
+  renderKey: null, textKey: null, explFor: -1, lastHostId: null, lastVibSec: null,
+  lastCoins: null, seenFx: {}, fxInit: false, shopPick: null, shopKey: null, buying: false, frozen: false, locking: false,
+  cutQ: [], cutBusy: false, cutT: null, bombed: false
 };
 
 // ══════════════════════════════════════════
@@ -2385,6 +2432,7 @@ function leaveRoomPlayer() {
 
 function attach(code) {
   detach();
+  S.wakeInit = false;
   registerPresence(code);
   S.snapRef = db.ref('rooms/' + code).on('value', snap => {
     if (!snap.exists()) {
@@ -2587,6 +2635,8 @@ async function onJoinRoom() {
 // ══════════════════════════════════════════
 function onRoom(room) {
   const { status } = room;
+  wakeCheck(room);
+  processEffects(room);
   if (status === 'waiting') renderLobby(room);
   else if (status === 'active') renderQ(room, false);
   else if (status === 'revealed') renderQ(room, true);
@@ -2650,7 +2700,9 @@ function renderQ(room, revealed) {
   const q = QUESTIONS[qOrd[ci]];
   if (!q) { toast('Data soal tidak ditemukan.', 'err'); return; }
   const optOrd = toArr(toArr(room.optionOrders)[ci]);
-  const correctDP = optOrd.indexOf(q.correct);
+  const correctDP = optOrd.indexOf(q.correct);            // posisi dasar (sama untuk semua pemain)
+  const perm = getPerm(room, ci);                         // posisi tampil -> posisi dasar (diacak oleh 🌪️)
+  const correctSP = perm.indexOf(correctDP);
 
   const pct = Math.round(ci / total * 100);
   document.getElementById('q-prog').style.width = pct + '%';
@@ -2668,7 +2720,7 @@ function renderQ(room, revealed) {
   // Tombol A–D & pembahasan dibangun ulang HANYA saat nomor soal / status berubah
   const wrap = document.getElementById('q-opts');
   const expl = document.getElementById('q-expl');
-  const key = ci + '|' + (revealed ? 'revealed' : 'active');
+  const key = ci + '|' + (revealed ? 'revealed' : 'active') + '|' + perm.join('');
   if (S.renderKey !== key) {
     S.renderKey = key;
     wrap.innerHTML = '';
@@ -2677,7 +2729,7 @@ function renderQ(room, revealed) {
       const btn = document.createElement('button');
       btn.className = 'opt-btn'; btn.dataset.dp = i;
       btn.innerHTML = '<div class="opt-main"><span class="opt-lbl">' + labels[i] + '</span>' +
-        '<div class="opt-body">' + fmt(q.options[optOrd[i]]) + '</div><span class="cnt-badge" style="display:none"></span></div>';
+        '<div class="opt-body">' + fmt(q.options[optOrd[perm[i]]]) + '</div><span class="cnt-badge" style="display:none"></span></div>';
       if (!revealed) btn.addEventListener('click', () => castVote(i, ci, correctDP));
       wrap.appendChild(btn);
     }
@@ -2693,21 +2745,22 @@ function renderQ(room, revealed) {
   }
 
   // Update ringan: hanya class tiap tombol (terpilih / benar / salah / disabled) + badge jumlah
-  const myDP = myAnswerDP(room, ci);
+  updateFreeze();
+  const mySP = perm.indexOf(myAnswerDP(room, ci));   // jawabanku (posisi dasar) -> posisi tampil
   const ans = (room.playerAnswers && room.playerAnswers[ci]) || {};
   const cnt = [0,0,0,0];
   if (revealed) Object.keys(players).forEach(u => { if (ans[u] !== undefined && cnt[ans[u]] !== undefined) cnt[ans[u]]++; });
   wrap.querySelectorAll('.opt-btn').forEach((btn, i) => {
     let cls = 'opt-btn';
-    if (revealed) { if (i === correctDP) cls += (myDP === i ? ' correct' : ' show-cor'); else if (myDP === i) cls += ' wrong'; }
-    else if (myDP === i) cls += ' voted-me';
+    if (revealed) { if (i === correctSP) cls += (mySP === i ? ' correct' : ' show-cor'); else if (mySP === i) cls += ' wrong'; }
+    else if (mySP === i) cls += ' voted-me';
     if (btn.className !== cls) btn.className = cls;
-    const dis = revealed || _timerLocked;
+    const dis = revealed || _timerLocked || S.frozen || S.bombed;
     if (btn.disabled !== dis) btn.disabled = dis;
     const b = btn.querySelector('.cnt-badge');
-    if (revealed && cnt[i] >= 1) {
-      b.textContent = cnt[i];
-      b.className = 'cnt-badge' + (i === correctDP ? ' cor' : (myDP === i ? ' wro' : ''));
+    if (revealed && cnt[perm[i]] >= 1) {
+      b.textContent = cnt[perm[i]];
+      b.className = 'cnt-badge' + (i === correctSP ? ' cor' : (mySP === i ? ' wro' : ''));
       b.style.display = '';
     } else { b.style.display = 'none'; b.textContent = ''; }
   });
@@ -2720,6 +2773,8 @@ function renderQ(room, revealed) {
   const elCor = document.getElementById('sb-correct'), elWrong = document.getElementById('sb-wrong');
   if (elCor) elCor.textContent = myCor;
   if (elWrong) elWrong.textContent = myWrong;
+
+  updateCoins(room); renderShop(room, revealed);
 
   // Persetujuan peserta
   const st = readyStats(room);
@@ -2757,26 +2812,27 @@ function renderQ(room, revealed) {
 // CAST VOTE
 // ══════════════════════════════════════════
 async function castVote(dp, qi, correctDP) {
+  // dp = posisi di LAYAR; yang disimpan & dinilai = posisi dasar (perm[dp]) supaya acak opsi tidak merusak penilaian
   if (S.voting) return;            // cegah klik ganda bersamaan
-  if (_timerLocked) return;        // waktu habis / jawaban dikunci
+  if (_timerLocked || S.frozen || S.bombed) return;
   S.voting = true;
-  const prevVote = S.myVote;
-  if (prevVote === dp) { S.voting = false; return; }
+  const perm = getPerm(S.lastRoom, qi), bp = perm[dp];
+  const prevVote = S.myVote;       // juga posisi dasar
+  if (prevVote === bp) { S.voting = false; return; }
 
-  if (prevVote === null) { S.myTotal++; if (dp === correctDP) S.myCorrect++; }
-  else { if (prevVote === correctDP) S.myCorrect--; if (dp === correctDP) S.myCorrect++; }
-  S.myVote = dp;
+  if (prevVote === null) { S.myTotal++; if (bp === correctDP) S.myCorrect++; }
+  else { if (prevVote === correctDP) S.myCorrect--; if (bp === correctDP) S.myCorrect++; }
+  S.myVote = bp;
 
   document.querySelectorAll('#q-opts .opt-btn').forEach((b, i) => b.classList.toggle('voted-me', i === dp));
   try {
-    // Hanya simpan jawabanku sendiri — jumlah pemilih per opsi dihitung dari playerAnswers
-    await db.ref('rooms/'+S.code+'/playerAnswers/'+qi+'/'+S.uid).set(dp);
+    await db.ref('rooms/'+S.code+'/playerAnswers/'+qi+'/'+S.uid).set(bp);
   } catch(e) {
     toast('Gagal menyimpan jawaban: ' + e.message, 'err');
     S.myVote = prevVote;
-    if (prevVote === null) { S.myTotal--; if (dp === correctDP) S.myCorrect--; }
-    else { if (prevVote === correctDP) S.myCorrect++; if (dp === correctDP) S.myCorrect--; }
-    document.querySelectorAll('#q-opts .opt-btn').forEach((b, i) => b.classList.toggle('voted-me', i === prevVote));
+    if (prevVote === null) { S.myTotal--; if (bp === correctDP) S.myCorrect--; }
+    else { if (prevVote === correctDP) S.myCorrect++; if (bp === correctDP) S.myCorrect--; }
+    document.querySelectorAll('#q-opts .opt-btn').forEach((b, i) => b.classList.toggle('voted-me', i === perm.indexOf(prevVote)));
   } finally { S.voting = false; }
 }
 
@@ -2801,7 +2857,10 @@ async function hostStart() {
 }
 
 async function hostLock() {
-  if (!S.isHost) return;
+  if (!S.isHost || S.locking) return;
+  const room = S.lastRoom;
+  if (!room || room.status !== 'active') return;
+  S.locking = true;
   const btn = document.getElementById('btn-lock');
   btn.textContent = 'Memuat...'; btn.disabled = true;
   const TO = setTimeout(() => {
@@ -2809,13 +2868,25 @@ async function hostLock() {
     showOv('Tombol Macet!',
       'Koneksi mungkin idle. Coba refresh halaman — sistem akan otomatis mengembalikanmu ke soal terakhir sebagai Host.');
   }, 8000);
+  const base = 'rooms/' + S.code, qi = room.currentQuestion || 0;
+  let claimed = false;
   try {
-    await db.ref('rooms/'+S.code+'/status').set('revealed');
+    // Klaim hak memberi koin untuk soal ini (anti ganda kalau hostLock terpanggil dua kali / host berganti)
+    const cl = await db.ref(base + '/coinAwards/' + qi).transaction(c => c ? undefined : { by: S.uid });
+    claimed = cl.committed;
+    const upd = { status: 'revealed' };
+    if (claimed) {
+      const cur = (await db.ref(base + '/coins').once('value')).val() || {};
+      const gains = calcGains(room, qi);
+      Object.keys(gains).forEach(u => { upd['coins/' + u] = (cur[u] || 0) + gains[u]; });
+    }
+    await db.ref(base).update(upd);        // status + semua koin dalam SATU update
     clearTimeout(TO);
   } catch(e) {
     clearTimeout(TO); btn.textContent = '🔒 Kunci Jawaban'; btn.disabled = false;
+    if (claimed) db.ref(base + '/coinAwards/' + qi).remove().catch(() => {});
     toast('Gagal mengunci: ' + e.message, 'err');
-  }
+  } finally { S.locking = false; }
 }
 
 async function hostNext(force) {
@@ -2873,6 +2944,9 @@ function resetLocal() {
   S.renderKey = null; S.textKey = null; S.explFor = -1; S.lastHostId = null; S.lastVibSec = null;
   _timerLocked = false;
   S.rejoining = false; S.myJoinedAt = null;
+  S.lastCoins = null; S.seenFx = {}; S.fxInit = false; S.shopPick = null; S.shopKey = null; S.buying = false; S.frozen = false; S.locking = false;
+  S.cutQ = []; S.cutBusy = false; S.bombed = false; clearTimeout(S.cutT);
+  const cv = document.getElementById('cut'); if (cv) cv.style.display = 'none';
 }
 
 function handleHostChange(room) {
@@ -2928,35 +3002,272 @@ async function doLeave() {
 
 function hostNewRoom() { doLeave(); }
 
-function initVibe() {
-  S.vibeOn = localStorage.getItem('quiz_vibe') !== '0';
-  const b = document.getElementById('vib-btn'); if (!b) return;
-  const tb = document.getElementById('vib-test');
-  if (!('vibrate' in navigator)) { b.style.display = 'none'; if (tb) tb.style.display = 'none'; return; }
-  b.textContent = S.vibeOn ? '📳 Getar: ON' : '🔕 Getar: OFF';
+// ── Panggil / bangunkan teman: getar di SEMUA HP peserta lain ──
+async function wakeAll() {
+  if (!S.code) return;
+  const now = Date.now() + (S.offset || 0), last = S.lastRoom && S.lastRoom.wake;
+  if (last && last.at && now - last.at < 5000) { toast('Tunggu sebentar sebelum memanggil lagi ⏳', 'info', 2000); return; }
+  vib([200, 100, 200]);   // ketukan ini juga "membuka izin getar" di browser HP-mu
+  try {
+    await db.ref('rooms/' + S.code + '/wake').set({ by: S.uid, name: S.name || 'Seseorang', at: firebase.database.ServerValue.TIMESTAMP });
+    toast('🔔 Semua HP dipanggil!', 'ok', 2500);
+  } catch (e) { toast('Gagal memanggil: ' + ((e && e.message) || e), 'err'); }
 }
-function toggleVibe() {
-  S.vibeOn = !S.vibeOn; localStorage.setItem('quiz_vibe', S.vibeOn ? '1' : '0'); initVibe();
-  if (S.vibeOn && navigator.vibrate) navigator.vibrate(40);
-}
-// Tes getar manual (tidak terpengaruh tombol ON/OFF) — untuk memeriksa apakah HP-mu menggetarkan saat ada musik
-function testVibe() {
-  let accepted = false;
-  try { accepted = navigator.vibrate([250, 120, 250]); } catch(e) {}
-  toast(accepted ? '📳 Perintah getar dikirim. Kalau HP tidak bergetar, cek pengaturan getar di HP-mu.'
-                 : '⚠️ Browser menolak getar. Coba ketuk layar dulu, lalu tes lagi.', accepted ? 'info' : 'err', 5000);
+function wakeCheck(room) {
+  const w = room.wake;
+  if (!S.wakeInit) { S.wakeInit = true; S.wakeSeen = (w && w.at) || 0; return; }   // panggilan lama sebelum kita masuk diabaikan
+  if (!w || !w.at || w.at === S.wakeSeen) return;
+  S.wakeSeen = w.at;
+  if (w.by === S.uid) return;
+  vib([600, 150, 600, 150, 900]);
+  toast('🔔 ' + (w.name || 'Temanmu') + ' memanggilmu! Ayo bangun!', 'info', 5000);
 }
 function iAnswered() {
   const r = S.lastRoom, ci = r ? (r.currentQuestion || 0) : 0;
   const a = r && r.playerAnswers && r.playerAnswers[ci];
   return S.myVote !== null || !!(a && a[S.uid] !== undefined);
 }
-function vib(pattern) { try { if (S.vibeOn && navigator.vibrate) navigator.vibrate(pattern); } catch(e) {} }
+function vib(pattern) { try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {} }
 function maybeVibrate(sec) {
   if (sec > 10 || sec < 1 || S.lastVibSec === sec) return;
   S.lastVibSec = sec;
-  if (iAnswered()) return;
-  vib(sec === 10 ? 250 : sec >= 4 ? 70 : [90, 60, 90]);
+  vib(sec === 10 ? 300 : sec >= 4 ? 120 : [150, 80, 150]);   // 10 detik terakhir: SEMUA peserta bergetar (sudah menjawab atau belum)
+}
+
+
+// ══════════════════════════════════════════
+// KOIN, TOKO ITEM & EFEK
+// rooms/{kode}/coins/{uid}, effects/{qi}/{target}, shield/{uid}, boost/{uid}/{qi}, purchases/{ci}/{uid}, coinAwards/{qi}
+// ══════════════════════════════════════════
+const ITEMS = {
+  boost:   { ico: '✨', name: 'Poin x2',     cost: 25, desc: 'Soal berikutnya, poinmu ×2', target: false },
+  shield:  { ico: '🛡️', name: 'Perisai',     cost: 20, desc: 'Kebal 1 sabotase',           target: false },
+  freeze:  { ico: '❄️', name: 'Bekukan',     cost: 30, desc: 'Teman beku 3 detik',         target: true, hit: 'Kamu dibekukan oleh',   col: 'rgba(80,170,255,.5)' },
+  shuffle: { ico: '🌪️', name: 'Acak Opsi',   cost: 30, desc: 'Opsi layar temanmu diacak',  target: true, hit: 'Opsimu diacak oleh',    col: 'rgba(160,100,255,.5)' },
+  fog:     { ico: '🌫️', name: 'Kabut',       cost: 30, desc: 'Soal temanmu buram 8 detik', target: true, hit: 'Layarmu dikabuti oleh', col: 'rgba(150,165,185,.5)' },
+  flip:    { ico: '🙃', name: 'Balik Layar', cost: 35, desc: 'Layar temanmu terbalik 8 dtk', target: true, hit: 'Layarmu dibalik oleh', col: 'rgba(255,90,170,.5)' },
+  bomb:    { ico: '💣', name: 'Bom Waktu',   cost: 40, desc: 'Waktu temanmu dipangkas 15 dtk', target: true, hit: 'Waktumu dipangkas oleh', col: 'rgba(255,70,50,.55)' }
+};
+const FREEZE_MS = 3000, VFX_MS = 8000, BOMB_SEC = 15;
+const _at = (o, a, b) => (o && o[a] && o[a][b] !== undefined) ? o[a][b] : undefined;   // o[a][b] aman
+const myCoins = room => (room.coins && room.coins[S.uid]) || 0;
+const pname = (room, u) => (room.players && room.players[u] && room.players[u].name) || 'Seseorang';
+
+function isCorrect(room, i, u) {
+  const q = QUESTIONS[toArr(room.questionOrder)[i]];
+  if (!q) return false;
+  const a = _at(room.playerAnswers, i, u);
+  return a !== undefined && a === toArr(toArr(room.optionOrders)[i]).indexOf(q.correct);
+}
+function calcGains(room, qi) {              // koin yang didapat tiap pemain untuk soal qi
+  const g = {};
+  Object.keys(room.players || {}).forEach(u => {
+    if (!isCorrect(room, qi, u)) return;
+    let streak = 1;
+    for (let j = qi - 1; j >= 0 && isCorrect(room, j, u); j--) streak++;
+    g[u] = 10 + (streak >= 3 ? 5 : 0);
+  });
+  return g;
+}
+function calcPoints(room, u) {              // jawaban benar ×100, ×2 kalau boost aktif di soal itu
+  let pts = 0;
+  const n = toArr(room.questionOrder).length;
+  for (let i = 0; i < n; i++) if (isCorrect(room, i, u)) pts += 100 * (_at(room.boost, u, i) ? 2 : 1);
+  return pts;
+}
+function getFx(room, qi, u) {               // efek aktif (bukan pending / diblokir)
+  const f = _at(room.effects, qi, u);
+  return (f && !f.pending && !f.blocked) ? f : null;
+}
+function getPerm(room, qi) {                // posisi tampil -> posisi dasar
+  const f = room && getFx(room, qi, S.uid);
+  const p = f && f.type === 'shuffle' && f.perm ? toArr(f.perm) : null;
+  return (p && p.length === 4) ? p : [0, 1, 2, 3];
+}
+function randPerm() {
+  let p; do { p = shuffle([0, 1, 2, 3]); } while (p.every((v, i) => v === i));
+  return p;
+}
+
+function updateCoins(room) {
+  const v = myCoins(room);
+  document.getElementById('coin-val').textContent = v;
+  if (S.lastCoins !== null && v > S.lastCoins) {
+    const f = document.createElement('div');
+    f.className = 'coin-float'; f.textContent = '+' + (v - S.lastCoins) + ' 🪙';
+    document.body.appendChild(f); setTimeout(() => f.remove(), 1500);
+  }
+  S.lastCoins = v;
+}
+
+// Beku: dihitung dari questionStartedAt (waktu server) -> sama di semua layar & tahan refresh
+function updateFreeze() {
+  const room = S.lastRoom, ov = document.getElementById('freeze-ov');
+  let left = 0, by = '';
+  if (room && room.status === 'active') {
+    const ci = room.currentQuestion || 0, f = getFx(room, ci, S.uid);
+    if (f && f.type === 'freeze') {
+      left = (room.questionStartedAt || 0) + FREEZE_MS - (Date.now() + (S.offset || 0));
+      by = pname(room, f.by);
+    }
+  }
+  const was = S.frozen; S.frozen = left > 0;
+  ov.style.display = S.frozen ? 'flex' : 'none';
+  if (S.frozen) {
+    document.getElementById('fz-n').textContent = Math.ceil(left / 1000);
+    document.getElementById('fz-t').textContent = 'Kamu dibekukan oleh ' + by + '!';
+  }
+  applyVisualFx(room);
+  if (was !== S.frozen) document.querySelectorAll('#q-opts .opt-btn').forEach(b => { b.disabled = S.frozen || S.bombed || _timerLocked || (room && room.status !== 'active'); });
+}
+
+// Kabut & Balik Layar: aktif 8 detik pertama soal (dihitung dari waktu server)
+function applyVisualFx(room) {
+  let fog = false, flip = false;
+  if (room && room.status === 'active') {
+    const f = getFx(room, room.currentQuestion || 0, S.uid);
+    if (f && (f.type === 'fog' || f.type === 'flip') && (room.questionStartedAt || 0) + VFX_MS > Date.now() + (S.offset || 0)) { fog = f.type === 'fog'; flip = f.type === 'flip'; }
+  }
+  ['q-text', 'q-opts'].forEach(id => { const e = document.getElementById(id); e.classList.toggle('fx-fog', fog); e.classList.toggle('fx-flip', flip); });
+}
+function timeCut() {                         // Bom Waktu: pangkas waktu layar target
+  const r = S.lastRoom;
+  if (!r || r.status !== 'active') return 0;
+  const f = getFx(r, r.currentQuestion || 0, S.uid);
+  return f && f.type === 'bomb' ? BOMB_SEC : 0;
+}
+
+// ── Cutscene serangan (data-driven: tampil di layar SEMUA pemain, antrean berurutan) ──
+function queueCut(room, f, t) {
+  const pl = room.players || {};
+  S.cutQ.push({ type: f.type, blocked: !!f.blocked, a: pl[f.by] || { name: 'Seseorang' }, t: pl[t] || { name: 'Seseorang' } });
+  if (!S.cutBusy) nextCut();
+}
+function nextCut() {
+  const ov = document.getElementById('cut'), c = S.cutQ.shift();
+  clearTimeout(S.cutT);
+  if (!c || !S.code) { S.cutBusy = false; S.cutQ = []; ov.style.display = 'none'; return; }
+  S.cutBusy = true;
+  const it = ITEMS[c.type], av = p => '<div class="cut-av ' + p.k + '" style="background:' + esc(p.o.color || '#4f7eff') + '">' + esc((p.o.name || '?')[0]).toUpperCase() + '</div>';
+  ov.style.setProperty('--cc', it.col);
+  ov.innerHTML = '<div class="cut-ti">⚔️ SERANGAN!</div><div class="cut-stage' + (c.blocked ? ' blk' : '') + '">' +
+    av({ k: 'a', o: c.a }) + '<div class="cut-proj">' + it.ico + '</div>' + av({ k: 't', o: c.t }) +
+    (c.blocked ? '<div class="cut-sh">🛡️</div>' : '<div class="cut-boom">💥</div>') + '</div>' +
+    '<div class="cut-txt">' + (c.blocked ? '🛡️ ' + esc(c.t.name) + ' menangkis ' + it.name + ' dari ' + esc(c.a.name) + '!'
+      : esc(c.a.name) + ' menyerang ' + esc(c.t.name) + ' dengan ' + it.ico + ' ' + it.name + '!') + '</div>' +
+    '<div class="cut-sub">' + (c.blocked ? 'Perisai pecah, serangan gagal.' : it.desc + ' di soal berikutnya.') + '</div><div class="cut-skip">ketuk untuk lewati</div>';
+  ov.style.display = 'flex';
+  vib(c.blocked ? [80, 60, 80] : [60, 40, 160]);
+  S.cutT = setTimeout(nextCut, 3300);
+}
+document.getElementById('cut').addEventListener('click', nextCut);
+
+// Notifikasi dari data efek (muncul sekali per efek; efek lama saat refresh tidak diulang)
+function processEffects(room) {
+  const fx = room.effects || {};
+  Object.keys(fx).forEach(qi => Object.keys(fx[qi] || {}).forEach(t => {
+    const f = fx[qi][t];
+    if (!f || f.pending || !ITEMS[f.type]) return;
+    const key = qi + '|' + t + '|' + (f.blocked ? 'b' : 'a');
+    if (S.seenFx[key]) return;
+    S.seenFx[key] = 1;
+    if (!S.fxInit) return;                       // efek lama saat refresh: tanpa cutscene/notifikasi
+    const it = ITEMS[f.type];
+    queueCut(room, f, t);
+    if (t === S.uid && !f.blocked) toast(it.hit + ' ' + pname(room, f.by) + ' ' + it.ico, 'err', 4500);
+    else if (t === S.uid) toast('🛡️ Perisaimu menahan ' + it.name + ' dari ' + pname(room, f.by) + '!', 'ok', 4500);
+    else if (f.by === S.uid && f.blocked) toast('🛡️ Seranganmu ke ' + pname(room, t) + ' ditangkis perisainya!', 'err', 4500);
+  }));
+  S.fxInit = true;
+}
+
+// ── Toko (fase revealed, berlaku untuk soal berikutnya) ──
+function renderShop(room, revealed) {
+  const el = document.getElementById('shop');
+  const ci = room.currentQuestion || 0, nq = ci + 1;
+  if (!revealed || nq >= toArr(room.questionOrder).length) { el.style.display = 'none'; S.shopKey = null; return; }
+  const coins = myCoins(room), bought = _at(room.purchases, ci, S.uid), hasShield = !!(room.shield && room.shield[S.uid]);
+  const others = Object.entries(room.players || {}).filter(([u]) => u !== S.uid);
+  const hit = others.map(([u]) => (_at(room.effects, nq, u) ? 1 : 0)).join('');
+  const key = [ci, coins, bought || '', hasShield, S.shopPick || '', S.buying, hit, others.map(([u, p]) => u + p.name).join()].join('|');
+  el.style.display = 'block';
+  if (key === S.shopKey) return;
+  S.shopKey = key;
+  let h = '<div class="shop-h"><span>🛒 Toko Item</span><span class="coin-chip">🪙 ' + coins + '</span></div>' +
+    '<div class="shop-note">' + (bought ? 'Kamu sudah memakai ' + ITEMS[bought].ico + ' ' + ITEMS[bought].name + ' di soal ini.' : 'Berlaku untuk soal berikutnya · maksimal 1 item per soal') + '</div><div class="shop-grid">';
+  Object.keys(ITEMS).forEach(k => {
+    const it = ITEMS[k], off = bought || S.buying || coins < it.cost || (k === 'shield' && hasShield);
+    h += '<button class="shop-item" data-item="' + k + '"' + (off ? ' disabled' : '') + '><b>' + it.ico + ' ' + it.name + '</b><small>' +
+      (k === 'shield' && hasShield ? 'Perisai sudah aktif' : it.desc) + '</small><div class="pr">🪙 ' + it.cost + '</div></button>';
+  });
+  h += '</div>';
+  if (S.shopPick && !bought) {
+    h += '<div class="shop-tgs"><div class="shop-note">Pilih target ' + ITEMS[S.shopPick].ico + ' ' + ITEMS[S.shopPick].name + ':</div>';
+    if (!others.length) h += '<div class="shop-note">Belum ada teman lain di room.</div>';
+    others.forEach(([u, p]) => {
+      const taken = !!_at(room.effects, nq, u);
+      h += '<button class="shop-tg" data-target="' + esc(u) + '"' + (taken || S.buying ? ' disabled' : '') + '><span class="av" style="background:' + esc(p.color || '#4f7eff') + '">' +
+        esc((p.name || '?')[0]).toUpperCase() + '</span><span style="flex:1">' + esc(p.name || '?') + '</span>' + (taken ? '<small>sudah disabotase</small>' : '') + '</button>';
+    });
+    h += '<button class="shop-tg" data-cancel="1">✖ Batal</button></div>';
+  }
+  el.innerHTML = h;
+}
+document.getElementById('shop').addEventListener('click', e => {
+  const t = e.target.closest('button'); if (!t || t.disabled) return;
+  const rerender = () => { S.shopKey = null; if (S.lastRoom) renderShop(S.lastRoom, true); };
+  if (t.dataset.item) { if (ITEMS[t.dataset.item].target) { S.shopPick = t.dataset.item; rerender(); } else buyItem(t.dataset.item); }
+  else if (t.dataset.target) buyItem(S.shopPick, t.dataset.target);
+  else if (t.dataset.cancel) { S.shopPick = null; rerender(); }
+});
+
+async function buyItem(type, target) {
+  const room = S.lastRoom, it = ITEMS[type];
+  if (S.buying || !room || !it || room.status !== 'revealed') return;
+  const ci = room.currentQuestion || 0, nq = ci + 1;
+  if (nq >= toArr(room.questionOrder).length) return;
+  const base = 'rooms/' + S.code, me = S.uid, undo = [];
+  S.buying = true; S.shopPick = null; S.shopKey = null; renderShop(room, true);
+  try {
+    // 1) klaim jatah 1 item untuk soal ini
+    const pr = await db.ref(base + '/purchases/' + ci + '/' + me).transaction(c => c ? undefined : type);
+    if (!pr.committed) throw { soft: 'Kamu sudah memakai 1 item di soal ini.' };
+    undo.push(() => db.ref(base + '/purchases/' + ci + '/' + me).remove());
+    // 2) sabotase: klaim slot target (satu target = satu sabotase per soal)
+    const fxRef = target ? db.ref(base + '/effects/' + nq + '/' + target) : null;
+    if (fxRef) {
+      const sl = await fxRef.transaction(c => c ? undefined : { type, by: me, pending: true });
+      if (!sl.committed) throw { soft: pname(room, target) + ' sudah kena sabotase di soal berikutnya.' };
+      undo.push(() => fxRef.remove());
+    }
+    // 3) kurangi koin dengan transaction (tidak bisa minus / ganda)
+    let ok = false;
+    const cr = await db.ref(base + '/coins/' + me).transaction(c => {
+      ok = false; if (c === null) return 0;
+      if (c >= it.cost) { ok = true; return c - it.cost; }
+      return undefined;
+    });
+    if (!cr.committed || !ok) throw { soft: 'Koin tidak cukup.' };
+    undo.push(() => db.ref(base + '/coins/' + me).transaction(c => (c || 0) + it.cost));
+    // 4) terapkan
+    if (type === 'boost') await db.ref(base + '/boost/' + me + '/' + nq).set(true);
+    else if (type === 'shield') await db.ref(base + '/shield/' + me).set(true);
+    else {
+      let had = false;                      // perisai target: habis dipakai & efek hilang
+      await db.ref(base + '/shield/' + target).transaction(c => { had = !!c; return c ? null : c; });
+      const fx = { type, by: me, blocked: had };
+      if (type === 'shuffle') fx.perm = randPerm();
+      await fxRef.set(fx);
+      if (!had) toast(it.ico + ' ' + pname(room, target) + ' kena ' + it.name + ' di soal berikutnya!', 'ok');
+    }
+    if (!target) toast(it.ico + ' ' + it.name + ' aktif untuk soal berikutnya!', 'ok');
+  } catch (e) {
+    for (const u of undo.reverse()) { try { await u(); } catch (_) {} }
+    toast(e && e.soft ? e.soft : fbErrMsg('Gagal membeli item', e), 'err', 4000);
+  } finally {
+    S.buying = false; S.shopKey = null;
+    if (S.lastRoom) renderShop(S.lastRoom, S.lastRoom.status === 'revealed');
+  }
 }
 
 // ══════════════════════════════════════════
@@ -2968,25 +3279,33 @@ let _timerLocked = false;
 
 function startQuestionTimer(startedAt) {
   clearInterval(_timerInterval);
-  _timerLocked = false;
+  _timerLocked = false; S.bombed = false;
   const tc = document.getElementById('timer-card');
   if (tc) { tc.style.display = ''; tc.style.opacity = '1'; }
 
   function _tick() {
     const elapsed = (Date.now() + (S.offset || 0) - startedAt) / 1000;
-    const remaining = Math.max(0, TIMER_DURATION - elapsed);
-    const pct = remaining / TIMER_DURATION;
+    const dur = TIMER_DURATION - timeCut();            // Bom Waktu memangkas waktu layar target
+    const remaining = Math.max(0, dur - elapsed);
+    const pct = remaining / dur;
+    const bomb = dur < TIMER_DURATION && remaining <= 0 && elapsed < TIMER_DURATION;
+    if (bomb !== S.bombed) {
+      S.bombed = bomb;
+      if (bomb) { vib(400); toast('💣 Waktumu habis duluan!', 'err'); }
+      document.querySelectorAll('#q-opts .opt-btn').forEach(b => { b.disabled = bomb || S.frozen || _timerLocked; });
+    }
     const numEl = document.getElementById('timer-num');
     const barEl = document.getElementById('timer-bar');
     const cardEl = document.getElementById('timer-card');
     if (numEl) numEl.textContent = Math.ceil(remaining);
+    updateFreeze();
     if (remaining > 0) maybeVibrate(Math.ceil(remaining));
     if (barEl) barEl.style.width = (pct * 100) + '%';
     if (cardEl) {
       cardEl.className = 'timer-card' +
         (remaining <= 10 ? ' danger' : remaining <= 30 ? ' warn' : '');
     }
-    if (remaining <= 0) {
+    if (remaining <= 0 && !bomb) {
       clearInterval(_timerInterval);
       _timerInterval = null;
       _onTimerExpired();
@@ -3011,7 +3330,7 @@ function stopTimer() {
 function _onTimerExpired() {
   if (_timerLocked) return;
   _timerLocked = true;
-  if (!iAnswered()) vib(450);
+  vib(600);   // waktu habis
   document.querySelectorAll('#q-opts .opt-btn').forEach(b => { b.disabled = true; });
   toast('⏰ Waktu habis!', 'err');
   if (S.isHost && S.lastRoom && S.lastRoom.status === 'active') {
@@ -3078,7 +3397,7 @@ function renderResult(room) {
   else if (pct >= 55) { title='📚 Lumayan!'; msg='Nilai '+pct+'/100 — Ada topik yang perlu dipelajari lagi.'; }
   else { title='💪 Terus Belajar!'; msg='Nilai '+pct+'/100 — Pelajari materi dan coba lagi, pasti bisa!'; }
   document.getElementById('r-title').textContent = title;
-  document.getElementById('r-msg').textContent = msg;
+  document.getElementById('r-msg').textContent = msg + ' ⭐ ' + calcPoints(room, S.uid) + ' poin';
   document.getElementById('host-res-bar').style.display = S.isHost ? 'flex' : 'none';
   renderLeaderboard(room);
 }
@@ -3106,10 +3425,10 @@ function renderLeaderboard(room) {
       const myAns = playerAnswers[i];
       if (myAns && myAns[uid] !== undefined && myAns[uid] === correctDP) correct++;
     }
-    return { uid, name: p.name || '?', color: p.color || '#4f7eff', correct, total };
+    return { uid, name: p.name || '?', color: p.color || '#4f7eff', correct, total, pts: calcPoints(room, uid) };
   });
 
-  scores.sort((a, b) => b.correct - a.correct || a.name.localeCompare(b.name));
+  scores.sort((a, b) => b.pts - a.pts || b.correct - a.correct || a.name.localeCompare(b.name));
 
   const medals = ['🥇', '🥈', '🥉'];
   const rankCls = ['rank-1', 'rank-2', 'rank-3'];
@@ -3129,10 +3448,10 @@ function renderLeaderboard(room) {
         (isMe ? '<span class="lb-you">Kamu</span>' : '') +
       '</div>' +
       '<div class="lb-right">' +
-        '<div class="lb-score-big">' + p.correct +
-          '<span style="font-size:13px;font-weight:600;color:var(--text2)">/' + total + '</span>' +
+        '<div class="lb-score-big">' + p.pts +
+          '<span style="font-size:13px;font-weight:600;color:var(--text2)"> poin</span>' +
         '</div>' +
-        '<div class="lb-score-sub">' + pct + '%</div>' +
+        '<div class="lb-score-sub">' + p.correct + '/' + total + ' benar · ' + pct + '%</div>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -3167,7 +3486,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('inp-code').addEventListener('input', function() {
     this.value = this.value.replace(/\D/g, '').slice(0, 6);   // hanya angka
   });
-  applyConfig(); initVibe(); uid(); initHome();
+  applyConfig(); uid(); initHome();
   if (FB_READY) startConn(); else showFbNotice();
 });
 </script>
