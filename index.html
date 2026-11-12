@@ -217,8 +217,8 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
     <button class="btn btn-p" style="width:100%" onclick="onCreateRoom()">👑 Buat Room Baru</button>
     <div class="divider">atau gabung room yang sudah ada</div>
     <div class="form-group">
-      <label class="form-lbl">Kode Room (6 karakter)</label>
-      <input class="form-input code" id="inp-code" placeholder="XXXXXX" maxlength="6">
+      <label class="form-lbl">Kode Room (6 angka)</label>
+      <input class="form-input code" id="inp-code" placeholder="000000" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
     </div>
     <button class="btn btn-o" style="width:100%" onclick="onJoinRoom()">🚪 Gabung Room</button>
   </div>
@@ -2247,6 +2247,8 @@ const S = {
   myCorrect: 0, myTotal: 0,
   lastQIdx: -1,        // tracks last rendered question index to detect question change
   voting: false,       // guard flag to prevent concurrent castVote calls (race condition)
+  rejoining: false,    // true selama pendaftaran ulang node pemain sedang berjalan
+  myJoinedAt: null,    // joinedAt asli node pemain kita (disimpan lokal untuk dipakai saat daftar ulang)
   renderKey: null, textKey: null, explFor: -1, lastHostId: null, lastVibSec: null, vibeOn: true
 };
 
@@ -2284,8 +2286,8 @@ function uid() {
 }
 
 function genCode() {
-  const ch = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  return Array.from({length:6}, () => ch[Math.floor(Math.random()*ch.length)]).join('');
+  // 6 digit angka (angka pertama tidak 0 agar tidak terpotong saat disalin)
+  return String(Math.floor(100000 + Math.random() * 900000));
 }
 
 function avatarColor(n) {
@@ -2345,6 +2347,9 @@ function startConn() {
   S.connRef = db.ref('.info/connected');
   S.connRef.on('value', snap => {
     const ok = snap.val() === true;
+    // Koneksi pulih: handler onDisconnect cuma berlaku untuk SATU koneksi, jadi
+    // pasang lagi tiap kali tersambung (hanya kalau sedang di dalam room).
+    if (ok && S.code && S.snapRef) registerPresence(S.code);
     ['cd-l','cd-q','cd-r'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.className = 'conn-dot' + (ok ? '' : ' dead');
@@ -2390,8 +2395,17 @@ function attach(code) {
     const room = snap.val();
     S.lastRoom = room;
     S.isHost = (room.hostId === S.uid);   // selalu sinkron dengan data room
+    const me = (room.players || {})[S.uid];
+    if (me && me.joinedAt) S.myJoinedAt = me.joinedAt;   // simpan joinedAt asli
     handleHostChange(room);
     onRoom(room);
+    if (!me) {
+      // Node pemain kita hilang (dihapus onDisconnect saat koneksi sempat putus)
+      // padahal kita masih di room -> daftarkan diri lagi, dan JANGAN cleanup room.
+      reRegisterPlayer(code, room);
+      return;
+    }
+    if (S.rejoining) return;   // pendaftaran ulang berjalan -> tunda cleanup
     maybeCleanupRoom(code, room);
   }, err => toast('Error: ' + err.message, 'err'));
 }
@@ -2406,6 +2420,28 @@ function registerPresence(code) {
   // menghapus sendiri node player ini — tanpa perlu aksi client.
   const playerRef = db.ref('rooms/' + code + '/players/' + S.uid);
   playerRef.onDisconnect().remove();
+}
+
+// Tulis ulang node pemain yang terhapus oleh onDisconnect setelah koneksi pulih.
+// Hanya jalan kalau listener room masih aktif (bukan keluar sengaja: doLeave/goHome
+// memanggil detach() lebih dulu sehingga listener ini tidak akan terpanggil).
+async function reRegisterPlayer(code, room) {
+  if (S.rejoining || !S.snapRef || S.code !== code || !S.uid) return;
+  S.rejoining = true;
+  try {
+    const playerRef = db.ref('rooms/' + code + '/players/' + S.uid);
+    playerRef.onDisconnect().remove();      // pasang lagi SEBELUM menulis
+    const name = S.name || localStorage.getItem('quiz_name') || 'Peserta';
+    await playerRef.set({
+      name, color: avatarColor(name),
+      isHost: (room.hostId === S.uid),
+      joinedAt: S.myJoinedAt || firebase.database.ServerValue.TIMESTAMP   // pertahankan yang asli
+    });
+  } catch (e) {
+    console.warn('Gagal mendaftar ulang pemain:', e && e.message);
+  } finally {
+    S.rejoining = false;
+  }
 }
 
 function maybeCleanupRoom(code, room) {
@@ -2526,7 +2562,7 @@ async function onJoinRoom() {
   const name = document.getElementById('inp-name').value.trim();
   const code = document.getElementById('inp-code').value.trim().toUpperCase();
   if (!name) { toast('Masukkan namamu dulu!', 'err'); return; }
-  if (code.length !== 6) { toast('Masukkan kode room 6 karakter!', 'err'); return; }
+  if (!/^\d{6}$/.test(code)) { toast('Masukkan kode room 6 angka!', 'err'); return; }
   S.name = name; localStorage.setItem('quiz_name', name);
   uid();
   try {
@@ -2836,6 +2872,7 @@ function resetLocal() {
   S.myVote = null; S.myCorrect = 0; S.myTotal = 0; S.lastQIdx = -1; S.voting = false;
   S.renderKey = null; S.textKey = null; S.explFor = -1; S.lastHostId = null; S.lastVibSec = null;
   _timerLocked = false;
+  S.rejoining = false; S.myJoinedAt = null;
 }
 
 function handleHostChange(room) {
@@ -3128,7 +3165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   document.getElementById('inp-code').addEventListener('input', function() {
-    this.value = this.value.toUpperCase();
+    this.value = this.value.replace(/\D/g, '').slice(0, 6);   // hanya angka
   });
   applyConfig(); initVibe(); uid(); initHome();
   if (FB_READY) startConn(); else showFbNotice();
